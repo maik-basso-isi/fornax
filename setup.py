@@ -32,7 +32,7 @@ setup(
     install_requires=[
         'psycopg2>=2.7.4',
         'SQLAlchemy>=1.2.8',
-        'numpy>-1.14.5'
+        'numpy>=1.14.5'
     ],
     author_email='daniel.staff@digicatapult.org.uk',
     long_description=long_description,

@@ -2,7 +2,7 @@ from fornax.model import Base, Match, Node, Edge
 from sqlalchemy.orm import Query
 from sqlalchemy import literal, and_, func, alias
 from typing import Tuple
-from collections import Iterable
+from collections.abc import Iterable
 
 
 def neighbours(h: int, start: bool, query_id: int) -> Query:
