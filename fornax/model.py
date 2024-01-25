@@ -143,7 +143,8 @@ class Edge(Base):
         'Node',
         primaryjoin='and_(Node.node_id == Edge.end, \
         Node.graph_id == Edge.graph_id)',
-        backref='end_edges'
+        backref='end_edges',
+        viewonly=True
     )
 
     def __repr__(self):
