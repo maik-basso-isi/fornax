@@ -869,7 +869,7 @@ class QueryHandle:
         ]
         return edges
 
-    def _optimise(self, hopping_distance, max_iters, offsets):
+    def _optimise(self, hopping_distance, max_iters, offsets, lmbda = 0.3, alpha = 0.3):
         sql_query = fornax.select.join(
             self.query_id, h=hopping_distance, offsets=offsets
         )
@@ -877,8 +877,10 @@ class QueryHandle:
 
         packed = fornax.opt.solve(
             records,
-            hopping_distance=hopping_distance,
-            max_iters=max_iters
+            hopping_distance = hopping_distance,
+            max_iters = max_iters,
+            lmbda = lmbda,
+            alpha = alpha
         )
         inference_costs, subgraphs, iters, sz, target_edges_arr = packed
         return inference_costs, subgraphs, iters, sz, target_edges_arr
@@ -937,7 +939,7 @@ class QueryHandle:
             **edge.meta
         }
 
-    def execute(self, n=5, hopping_distance=2, max_iters=10):
+    def execute(self, n=5, hopping_distance=2, max_iters=10, lmbda = 0.3, alpha = 0.3):
         """Execute a fuzzy subgraph matching query finding the top *n* subgraph
         matches between the query graph and the target graph.
 
@@ -964,7 +966,7 @@ class QueryHandle:
         target_edges = None
         query_edges = sorted(self._query_edges())
 
-        packed = self._optimise(hopping_distance, max_iters, offsets)
+        packed = self._optimise(hopping_distance, max_iters, offsets, lmbda = lmbda, alpha = alpha)
         inference_costs, subgraphs, iters, sz, target_edges_arr = packed
         target_edges = self._target_edges(target_nodes, target_edges_arr)
         target_edges = sorted(target_edges)

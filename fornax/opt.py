@@ -629,7 +629,7 @@ def _get_optimal_match(inference_costs: InferenceCost) -> OptimalMatch:
     return group_by_first('v', inference_costs)
 
 
-def solve(records: List[tuple], max_iters=10, hopping_distance=2):
+def solve(records: List[tuple], max_iters=10, hopping_distance=2, lmbda = 0.3, alpha = 0.3):
     """Generate a set of subgraph matches and costs from a query result
 
     Arguments:
@@ -642,7 +642,7 @@ def solve(records: List[tuple], max_iters=10, hopping_distance=2):
     prv_optimum_match = None
 
     neighbourhood_matching_costs, query_result, beta = _get_matching_costs(
-        records, hopping_distance)
+        records, hopping_distance, lmbda=lmbda, alpha=alpha)
     # keep a copy for successive iterations
     neighbourhood_matching_costs_cpy = neighbourhood_matching_costs.copy()
 
